@@ -24,7 +24,7 @@ const packetTemplate = {
 
 export default class VescProtocolParser extends Transform {
   constructor(options) {
-    super(options);
+    super({ ...options, objectMode: true });
 
     this.buffer = Buffer.alloc(0);
     this.packet = { ...packetTemplate };
@@ -88,7 +88,10 @@ export default class VescProtocolParser extends Transform {
             if (byte !== 3) {
               debug(`Invalid End Packet Byte received: "${byte}"`);
             } else {
-              this.push(this.packet.payload);
+              this.push({
+                type: this.packet.payload.readUInt8(0),
+                payload: this.packet.payload.slice(1),
+              });
             }
 
             this.resetState();
