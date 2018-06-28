@@ -8,11 +8,9 @@ export default [
       { file: pkg.main, format: 'cjs', sourcemap: true },
     ],
     external: [
-      'events',
-      'util',
       'debug',
-      'usb',
-      'serialport',
+      'stream',
+      '@mark48evo/vesc-packet',
     ],
     plugins: [
       babel({

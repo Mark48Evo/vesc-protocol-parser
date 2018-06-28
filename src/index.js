@@ -2,17 +2,16 @@
 /* eslint no-restricted-syntax: "off" */
 import Debug from 'debug';
 import { Transform } from 'stream';
-import crc16 from './crc16';
+import { crc16 } from '@mark48evo/vesc-packet';
 
 const debug = Debug('vesc:protocol-parser');
 
 const PACKET_HEADER = 1;
 const PACKET_LENGTH = 2;
 const PACKET_LENGTH_SECOND = 22;
-const PACKET_COMMAND = 3;
-const PACKET_PAYLOAD = 4;
-const PACKET_CRC_SECOND = 44;
-const PACKET_CRC = 5;
+const PACKET_PAYLOAD = 3;
+const PACKET_CRC_SECOND = 33;
+const PACKET_CRC = 4;
 
 const packetTemplate = {
   packetType: 0,
@@ -51,7 +50,7 @@ export default class VescProtocolParser extends Transform {
 
           case PACKET_LENGTH_SECOND:
             this.packet.packetSize |= byte;
-            this.packetState = PACKET_COMMAND;
+            this.packetState = PACKET_LENGTH
             break;
 
           case PACKET_LENGTH:
