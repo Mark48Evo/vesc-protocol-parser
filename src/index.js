@@ -50,7 +50,7 @@ export default class VescProtocolParser extends Transform {
 
           case PACKET_LENGTH_SECOND:
             this.packet.packetSize |= byte;
-            this.packetState = PACKET_LENGTH
+            this.packetState = PACKET_LENGTH;
             break;
 
           case PACKET_LENGTH:
